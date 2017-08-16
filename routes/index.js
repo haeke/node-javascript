@@ -14,5 +14,10 @@ router.get('/add', storeController.addStore);
 
 //post items from the editstore page
 router.post('/add', catchErrors(storeController.createStore));
+//handle adding an edited store page
+router.post('/add/:id/', catchErrors(storeController.updateStore));
+
+//edit store route
+router.get('/stores/:id/edit', catchErrors(storeController.editStore));
 
 module.exports = router;
