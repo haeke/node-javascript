@@ -6,7 +6,8 @@ const storeController = require('../controllers/storeController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 // route specific middleware example
-router.get('/', storeController.homePage);
+router.get('/', catchErrors(storeController.getStores));
+router.get('/stores', catchErrors(storeController.getStores));
 
 //add store controller
 router.get('/add', storeController.addStore);

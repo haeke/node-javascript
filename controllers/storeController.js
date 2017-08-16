@@ -16,3 +16,11 @@ exports.createStore = async (req, res) => {
   req.flash('success', `Successfully Created ${store.name}. Care to leave a review?`);
   res.redirect(`/store/${store.slug}`);
 };
+
+// remember to add catchErrors when using async await in our route specific middleware
+exports.getStores = async (req, res) => {
+  //query the database for list of all the stores stores
+  const stores = await Store.find(); //query for all the items in the store
+  console.log(stores);
+  res.render('stores', { title: 'Stores', stores: stores });
+};
