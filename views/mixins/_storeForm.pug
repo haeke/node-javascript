@@ -4,6 +4,15 @@ mixin storeForm(store = {})
     input(type="text" name="name" value=store.name)
     label(for="description") Description
     textarea(name="description" )= store.description
+    //- address longitude latitude
+    label(for="address") Address
+    //- label for address, name's location nested data is accessible from app.js line 29
+    input(type="text" id="address" name="location[address]" value=(store.location && store.location.address))
+    label(for="lng") Address Longitude
+    input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]) required)
+    label(for="lat") Address latitude
+    input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]) required)
+    //- pre=h.dump(store) - dump all the values accessible on this page
     - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Licensed']
     - const tags = store.tags || []
     ul.tags
