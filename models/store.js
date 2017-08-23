@@ -3,18 +3,6 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
-const multer = require('multer');
-const multerOptions = {
-  storage: multer.memoryStore(),
-  fileFilter(req, file, next) {
-    const isPhoto = file.mimeType.startsWith('image/');
-    if (isPhoto) {
-      next(null, true);
-    } else {
-      next({ mesesage: 'filetype not allowed' }, false);
-    }
-  },
-};
 
 // make the schema
 const storeSchema = new mongoose.Schema({
