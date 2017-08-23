@@ -35,6 +35,7 @@ const storeSchema = new mongoose.Schema({
       required: 'You must supply an address',
     },
   },
+  photo: String,
 });
 
 //pre save hook - set the slug property
