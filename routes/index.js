@@ -19,7 +19,10 @@ router.post('/add',
   catchErrors(storeController.createStore));
 
 //handle adding an edited store page
-router.post('/add/:id/', catchErrors(storeController.updateStore));
+router.post('/add/:id/',
+  storeController.upload,
+  catchErrors(storeController.resize),
+  catchErrors(storeController.updateStore));
 
 //edit store route
 router.get('/stores/:id/edit', catchErrors(storeController.editStore));
