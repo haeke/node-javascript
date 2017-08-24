@@ -27,4 +27,7 @@ router.post('/add/:id/',
 //edit store route
 router.get('/stores/:id/edit', catchErrors(storeController.editStore));
 
+//single store route
+router.get('/store/:slug', catchErrors(storeController.getStoreBySlug));
+
 module.exports = router;
