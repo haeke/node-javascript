@@ -100,3 +100,8 @@ exports.getStoreBySlug = async (req, res, next) => {
   res.render('store', { store: store, title: store.name });
   //res.json(store); //check that the query works
 };
+
+//
+exports.getStoresByTag = async (req, res) => {
+  res.send('it works');
+};
