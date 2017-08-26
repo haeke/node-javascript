@@ -39,15 +39,23 @@ const storeSchema = new mongoose.Schema({
 });
 
 //pre save hook - set the slug property
-storeSchema.pre('save', function (next) {
+storeSchema.pre('save', async function (next) {
   if (!this.isModified('name')) {
     next(); // skip it
     return; //stop the function
   }
   // set the slug property
   this.slug = slug(this.name);
+  // check for duplicate slug names if found add -(number) to it
+  // use a RegEx to search for any slugnames that are the same
+  const slugRegEx = new RegExp(`^(${this.slug}((-[0-9]*$)?)$)`, 'i'); //case insensitive
+  const storesWithSlug = await this.constructor.find({ slug: slugRegEx });
+  if (storesWithSlug.length) {
+    this.slug = `${this.slug}-${storesWithSlug.length + 1}`;
+  }
+
   next();
-  //TODO make slugs more unique
+
 });
 
 // reference for outside of this file
