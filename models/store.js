@@ -58,5 +58,11 @@ storeSchema.pre('save', async function (next) {
 
 });
 
+//custom static method to get the tags from all stores
+storeSchema.statics.getTagsList = function () {
+  return this.aggregate([
+    { $unwind: '$tags' }
+  ]);
+};
 // reference for outside of this file
 module.exports = mongoose.model('Store', storeSchema);
