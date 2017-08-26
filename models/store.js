@@ -61,7 +61,10 @@ storeSchema.pre('save', async function (next) {
 //custom static method to get the tags from all stores
 storeSchema.statics.getTagsList = function () {
   return this.aggregate([
-    { $unwind: '$tags' }
+    { $unwind: '$tags' },
+    //group by tag field, create a new field called count, increment by 1
+    { $group: { _id: '$tags', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
   ]);
 };
 // reference for outside of this file
