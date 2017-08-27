@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise; //required to surpress error in terminal
 const md5 = require('md5');
 const validator = require('validator');
-const mongodbErrorHandler = require('mongoose-mongodb-erros');
-const passportLocalMongoose = require('password-local-mongoose');
+const mongodbErrorHandler = require('mongoose-mongodb-errors');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new Schema({
   email: {

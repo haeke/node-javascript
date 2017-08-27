@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = mongoose.model('user');
+const promisify = require('es6-promisify');
 
 exports.loginForm = (req, res) => {
   res.render('login', { title: 'Login Form' });
@@ -31,4 +33,14 @@ exports.validateRegister = (req, res, next) => {
   }
 
   next(); //no errors found
+};
+
+//add registered user to the database
+exports.register = async (req, res, next) => {
+  const user = new User({ email: req.body.email, name: req.body.name });
+  //register will pass to the database from passportLocalMongoose
+  const register =  promisify(User.register, User); //pass the entire object to find the register method
+  await register(user, req.body.password);
+  res.send('that worked');
+  next(); //go to auth controller
 };
