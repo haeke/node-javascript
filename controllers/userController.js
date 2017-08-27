@@ -41,6 +41,5 @@ exports.register = async (req, res, next) => {
   //register will pass to the database from passportLocalMongoose
   const register =  promisify(User.register, User); //pass the entire object to find the register method
   await register(user, req.body.password);
-  res.send('that worked');
   next(); //go to auth controller
 };
