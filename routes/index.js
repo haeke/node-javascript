@@ -12,7 +12,7 @@ router.get('/', catchErrors(storeController.getStores));
 router.get('/stores', catchErrors(storeController.getStores));
 
 //add store controller
-router.get('/add', storeController.addStore);
+router.get('/add', authController.isLoggedIn, storeController.addStore);
 
 //post items from the editstore page
 router.post('/add',
@@ -48,5 +48,8 @@ router.post('/register',
 );
 
 router.get('/logout', authController.logout);
+
+//route for account page
+router.get('/account', userController.account);
 
 module.exports = router;
