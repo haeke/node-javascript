@@ -63,13 +63,18 @@ exports.getStores = async (req, res) => {
   res.render('stores', { title: 'Stores', stores: stores });
 };
 
+const confirmOwner = (store, user) => {
+  if (!store.author.equals(user._id)) {
+    throw Error('Cannot edit because you didnt create it');
+  }
+};
+
 //route for editing a stores information
 exports.editStore = async (req, res) => {
   // find the store from the id
   const store = await Store.findOne({ _id: req.params.id });
-
   // confirm they are the owner of the store
-
+  confirmOwner(store, req.user);
   // render the edit form so the user and update the info
   res.render('editStore', { title: `Edit ${store.name}`, store: store });
 };
@@ -93,7 +98,7 @@ exports.updateStore = async (req, res) => {
 exports.getStoreBySlug = async (req, res, next) => {
   //if you need to check what data is available use req.json(req.params)
   //query for store information in the slug
-  const store = await Store.findOne({ slug: req.params.slug });
+  const store = await Store.findOne({ slug: req.params.slug }).populate('author');
   if (!store) {
     return next();
   }
