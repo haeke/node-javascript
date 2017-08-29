@@ -48,6 +48,7 @@ exports.resize = async (req, res, next) => {
 
 //use async await to add data into the mongoDB database
 exports.createStore = async (req, res) => {
+  req.body.author = req.user._id; //get the ID of the currently logged on user
   //create the store with mongoDB
   const store = await (new Store(req.body)).save();
   req.flash('success', `Successfully Created ${store.name}. Care to leave a review?`);

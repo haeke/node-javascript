@@ -36,6 +36,11 @@ const storeSchema = new mongoose.Schema({
     },
   },
   photo: String,
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: 'Supply an author',
+  },
 });
 
 //pre save hook - set the slug property
