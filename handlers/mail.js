@@ -14,14 +14,22 @@ const transport = nodemailer.createTransport({
   },
 });
 
+const generateHTML = (filename, options = {}) => {
+  const html = pug.renderFile(`${__dirname}/../views/email/password-reset.pug`, options);
+  const inlined = juice(html); //automatically inline css
+  return inlined;
+};
+
 // send to email address
 exports.send = async (options) => {
+  const html = generateHTML(options.filename, options);
+  const text = htmlToText.fromString(html);
   const mailOptions = {
     from: `Testemail <noreply@whoknows.com>`,
     to: options.user.email,
     subject: options.subject,
-    html: 'to be done later',
-    text: 'to be done later',
+    html: html,
+    text: text,
   };
 
   //create a promise from a callback
