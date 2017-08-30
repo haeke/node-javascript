@@ -120,6 +120,11 @@ exports.getStoresByTag = async (req, res) => {
 };
 
 exports.searchStores = async (req, res) => {
-  const stores = await Store.find();
+  //search for the name or desciption in the schema
+  const stores = await Store.find({
+    $text: {
+      $search: req.query.q,
+    }
+  });
   res.json(stores);
 };
