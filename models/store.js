@@ -43,6 +43,12 @@ const storeSchema = new mongoose.Schema({
   },
 });
 
+//define the index for the name and description of stores
+storeSchema.index({
+  name: 'text',
+  description: 'text',
+});
+
 //pre save hook - set the slug property
 storeSchema.pre('save', async function (next) {
   if (!this.isModified('name')) {
@@ -72,5 +78,6 @@ storeSchema.statics.getTagsList = function () {
     { $sort: { count: -1 } },
   ]);
 };
+
 // reference for outside of this file
 module.exports = mongoose.model('Store', storeSchema);

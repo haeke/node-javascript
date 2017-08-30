@@ -118,3 +118,8 @@ exports.getStoresByTag = async (req, res) => {
 
   res.render('tag', { tags: tags, title: 'Tags', tag, stores });
 };
+
+exports.searchStores = async (req, res) => {
+  const stores = await Store.find();
+  res.json(stores);
+};
