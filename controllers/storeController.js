@@ -121,16 +121,18 @@ exports.getStoresByTag = async (req, res) => {
 
 exports.searchStores = async (req, res) => {
   //search for the name or desciption in the schema
-  const stores = await Store.find({
-    $text: {
-      $search: req.query.q,
+  const stores = await Store
+  .find({
+      $text: {
+        $search: req.query.q,
       }
     }, {
       score: { $meta: 'textScore' },
   })
   .sort({
     score: { $meta: 'textScore' },
-  });
-  
+  })
+  //limit to only 5 results example query in url: http://localhost:7777/api/v1/search?q=beer
+  .limit(5);
   res.json(stores);
 };
