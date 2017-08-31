@@ -985,6 +985,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 var axios = __webpack_require__(12);
 
+//map over each store and return html
+function searchResultsHTML(stores) {
+  return stores.map(function (store) {
+    return '\n      <a href="/stores/' + store.slug + '" class="search__result">\n        <strong>' + store.name + '</strong>\n      </a>\n      ';
+  }).join(''); //provide a string rather than an array
+}
+
 function typeAhead(search) {
   if (!search) {
     return;
@@ -1003,9 +1010,17 @@ function typeAhead(search) {
 
     //show the search result
     searchResults.style.display = 'block';
+    //remove if it does not match anymore
+    searchResults.innerHTML = '';
 
     axios.get('/api/v1/search?q=' + this.value).then(function (res) {
-      console.log(res.data);
+      if (res.data.length) {
+        console.log('there is some information');
+        var html = searchResultsHTML(res.data);
+        searchResults.innerHTML = html;
+      }
+    }).catch(function (err) {
+      console.error(err);
     });
   });
 };
