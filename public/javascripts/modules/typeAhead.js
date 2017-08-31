@@ -4,7 +4,7 @@ const axios = require('axios');
 function searchResultsHTML(stores) {
   return stores.map(store => {
     return `
-      <a href="/stores/${store.slug}" class="search__result">
+      <a href="/store/${store.slug}" class="search__result">
         <strong>${store.name}</strong>
       </a>
       `;
@@ -43,6 +43,16 @@ function typeAhead(search) {
           .catch(err => {
             console.error(err);
           });
+  });
+
+  //handle keyboard input
+  searchInput.on('keyup', (e) => {
+    console.log(e.keyCode);
+    //skip if user isn't pressing up down or Enter
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return; //skip
+    }
+    console.log('do something');
   });
 };
 

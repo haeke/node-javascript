@@ -988,7 +988,7 @@ var axios = __webpack_require__(12);
 //map over each store and return html
 function searchResultsHTML(stores) {
   return stores.map(function (store) {
-    return '\n      <a href="/stores/' + store.slug + '" class="search__result">\n        <strong>' + store.name + '</strong>\n      </a>\n      ';
+    return '\n      <a href="/store/' + store.slug + '" class="search__result">\n        <strong>' + store.name + '</strong>\n      </a>\n      ';
   }).join(''); //provide a string rather than an array
 }
 
@@ -1022,6 +1022,16 @@ function typeAhead(search) {
     }).catch(function (err) {
       console.error(err);
     });
+  });
+
+  //handle keyboard input
+  searchInput.on('keyup', function (e) {
+    console.log(e.keyCode);
+    //skip if user isn't pressing up down or Enter
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return; //skip
+    }
+    console.log('do something');
   });
 };
 
