@@ -1,4 +1,5 @@
 const axios = require('axios');
+const dompurify = require('dompurify');
 
 //map over each store and return html
 function searchResultsHTML(stores) {
@@ -33,11 +34,11 @@ function typeAhead(search) {
     axios.get(`/api/v1/search?q=${this.value}`)
           .then(res => {
             if (res.data.length) {
-              searchReults.innerHTML = searchResultsHTML(res.data);
+              searchReults.innerHTML = dompurify.sanitize(searchResultsHTML(res.data));
               return;
             }
             //nothing came back - display messages
-            searchResults.innerHTML =  `<div class="search__results">No results found for ${this.value} found </div>`;
+            searchResults.innerHTML =  dompurify.sanitize(`<div class="search__results">No results found for ${this.value} found </div>`);
           })
           .catch(err => {
             console.error(err);
