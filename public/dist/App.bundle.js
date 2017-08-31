@@ -1002,6 +1002,8 @@ function typeAhead(search) {
 
   //addeventlistener to track what is being typed into the input
   searchInput.on('input', function () {
+    var _this = this;
+
     if (!this.value) {
       //no value remove searchresults
       searchResults.style.display = 'none';
@@ -1010,15 +1012,14 @@ function typeAhead(search) {
 
     //show the search result
     searchResults.style.display = 'block';
-    //remove if it does not match anymore
-    searchResults.innerHTML = '';
 
     axios.get('/api/v1/search?q=' + this.value).then(function (res) {
       if (res.data.length) {
-        console.log('there is some information');
-        var html = searchResultsHTML(res.data);
-        searchResults.innerHTML = html;
+        searchReults.innerHTML = searchResultsHTML(res.data);
+        return;
       }
+      //nothing came back - display messages
+      searchResults.innerHTML = '<div class="search__results">No results found for ' + _this.value + ' found </div>';
     }).catch(function (err) {
       console.error(err);
     });
@@ -1026,12 +1027,34 @@ function typeAhead(search) {
 
   //handle keyboard input
   searchInput.on('keyup', function (e) {
-    console.log(e.keyCode);
     //skip if user isn't pressing up down or Enter
     if (![38, 40, 13].includes(e.keyCode)) {
       return; //skip
     }
-    console.log('do something');
+
+    var activeClass = 'search__result--active';
+    var current = search.querySelector('.' + activeClass);
+    var items = search.querySelectorAll('.search__result');
+    var next = void 0;
+
+    if (e.keyCode == 40 && current) {
+      next = current.nextElementSibling || items[0];
+    } else if (e.keyCode === 40) {
+      next = items[0];
+    } else if (e.keyCode === 38 && current) {
+      next = current.nextElementSibling || items[items.length - 1];
+    } else if (e.keyCode === 38) {
+      next = items[items.length - 1];
+    } else if (e.keyCode === 13 && current.href) {
+      window.location = current.href;
+      return;
+    }
+    //remove active class from current
+    if (current) {
+      current.classList.remove(activeClass);
+    }
+
+    next.classList.add(activeClass);
   });
 };
 
