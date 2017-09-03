@@ -4,7 +4,7 @@ import { $ } from './bling';
 
 const mapOptions = {
   center: { lat: 43.2, lng: -79.8 },
-  zoom: 8,
+  zoom: 10,
 };
 
 function loadPlaces(map, lat = 43.2, lng= -79.8) {
@@ -16,10 +16,26 @@ function loadPlaces(map, lat = 43.2, lng= -79.8) {
         return;
       }
 
+      //create bounds
+      const bounds = new google.maps.LatLngBounds();
+
       const markers = places.map(place => {
         const [placeLng, placeLat] = place.location.coordinates;
-        console.log(placeLng, placeLat);
+        const position = { lat: placeLat, lng: placeLng };
+        bounds.extend(position);
+
+        const marker = new google.maps.Marker({
+          map: map,
+          position: position,
+        });
+
+        marker.place = place;
+
+        return marker;
       });
+      //zoom the map to fit the markers
+      map.setCenter(bounds.getCenter());
+      map.fitBounds(bounds);
     });
 }
 

@@ -1001,7 +1001,7 @@ var axios = __webpack_require__(3);
 
 var mapOptions = {
   center: { lat: 43.2, lng: -79.8 },
-  zoom: 8
+  zoom: 10
 };
 
 function loadPlaces(map) {
@@ -1015,13 +1015,29 @@ function loadPlaces(map) {
       return;
     }
 
+    //create bounds
+    var bounds = new google.maps.LatLngBounds();
+
     var markers = places.map(function (place) {
       var _place$location$coord = _slicedToArray(place.location.coordinates, 2),
           placeLng = _place$location$coord[0],
           placeLat = _place$location$coord[1];
 
-      console.log(placeLng, placeLat);
+      var position = { lat: placeLat, lng: placeLng };
+      bounds.extend(position);
+
+      var marker = new google.maps.Marker({
+        map: map,
+        position: position
+      });
+
+      marker.place = place;
+
+      return marker;
     });
+    //zoom the map to fit the markers
+    map.setCenter(bounds.getCenter());
+    map.fitBounds(bounds);
   });
 }
 
