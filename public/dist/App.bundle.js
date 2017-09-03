@@ -1017,6 +1017,7 @@ function loadPlaces(map) {
 
     //create bounds
     var bounds = new google.maps.LatLngBounds();
+    var infoWindow = new google.maps.InfoWindow();
 
     var markers = places.map(function (place) {
       var _place$location$coord = _slicedToArray(place.location.coordinates, 2),
@@ -1034,6 +1035,14 @@ function loadPlaces(map) {
       marker.place = place;
 
       return marker;
+    });
+
+    //show details of marker when clicked
+    markers.forEach(function (marker) {
+      return marker.addListener('click', function () {
+        infoWindow.setContent(this.place.name);
+        infoWindow.open(map, this);
+      });
     });
     //zoom the map to fit the markers
     map.setCenter(bounds.getCenter());
