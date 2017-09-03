@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -984,7 +984,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var axios = __webpack_require__(12);
-var dompurify = __webpack_require__(37);
+var dompurify = __webpack_require__(30);
 
 //map over each store and return html
 function searchResultsHTML(stores) {
@@ -1869,38 +1869,6 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-__webpack_require__(11);
-
-var _bling = __webpack_require__(9);
-
-var _autocomplete = __webpack_require__(8);
-
-var _autocomplete2 = _interopRequireDefault(_autocomplete);
-
-var _typeAhead = __webpack_require__(10);
-
-var _typeAhead2 = _interopRequireDefault(_typeAhead);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// where webpack bundles
-(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
-
-(0, _typeAhead2.default)((0, _bling.$)('.search'));
-
-/***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 var __WEBPACK_AMD_DEFINE_RESULT__;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -2708,6 +2676,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return DOMPurify;
 });
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(11);
+
+var _bling = __webpack_require__(9);
+
+var _autocomplete = __webpack_require__(8);
+
+var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+var _typeAhead = __webpack_require__(10);
+
+var _typeAhead2 = _interopRequireDefault(_typeAhead);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// where webpack bundles
+(0, _autocomplete2.default)((0, _bling.$)('#address'), (0, _bling.$)('#lat'), (0, _bling.$)('#lng'));
+
+(0, _typeAhead2.default)((0, _bling.$)('.search'));
 
 /***/ })
 /******/ ]);
