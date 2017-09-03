@@ -60,9 +60,12 @@ router.post('/account/reset/:token',
   authController.confirmedPasswords,
   catchErrors(authController.update));
 
+//map page route
+router.get('/map', storeController.mapPage);
+
 // API endpoints
 router.get('/api/search', catchErrors(storeController.searchStores));
-
+// route that returns the 10 nearest stores given a lat and lng
 router.get('/api/stores/near', catchErrors(storeController.mapStores));
 
 module.exports = router;
