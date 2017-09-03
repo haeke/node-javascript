@@ -1040,7 +1040,8 @@ function loadPlaces(map) {
     //show details of marker when clicked
     markers.forEach(function (marker) {
       return marker.addListener('click', function () {
-        infoWindow.setContent(this.place.name);
+        var html = '\n          <div class="popup">\n            <a href="/store/' + this.place.slug + '">\n              <img src="/uploads/' + (this.place.photo || 'store.png') + '" alt="' + this.place.name + '" />\n              <p>' + this.place.name + ' - ' + this.place.location.address + '</p>\n            </a>\n          </div>\n        ';
+        infoWindow.setContent(html);
         infoWindow.open(map, this);
       });
     });
