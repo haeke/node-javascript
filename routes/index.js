@@ -62,6 +62,8 @@ router.post('/account/reset/:token',
 
 //map page route
 router.get('/map', storeController.mapPage);
+//get a users of hearted stores
+router.get('/hearts', catchErrors(storeController.getHearts));
 
 // API endpoints
 router.get('/api/search', catchErrors(storeController.searchStores));
@@ -69,5 +71,7 @@ router.get('/api/search', catchErrors(storeController.searchStores));
 router.get('/api/stores/near', catchErrors(storeController.mapStores));
 // route for individual hearted stores
 router.post('/api/stores/:id/heart', catchErrors(storeController.heartStore));
+
+
 
 module.exports = router;
