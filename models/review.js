@@ -14,7 +14,11 @@ const reviewSchema = new mongoose.Schema({
   store: {
     type: mongoose.Schema.ObjectId,
     ref: 'store',
-    required: 'You must supply a store'
+    required: 'You must supply a store',
+  },
+  text: {
+    type: String,
+    requred: 'Your review must have text',
   },
   rating: {
     type: Number,
