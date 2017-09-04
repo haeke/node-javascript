@@ -84,6 +84,15 @@ storeSchema.statics.getTagsList = function () {
   ]);
 };
 
+//get the top 10 stores
+storeSchema.statics.getTopStores = function() {
+  return this.aggregate([
+    //lookup stores and populate the reviews
+    { $lookup: { from: 'reviews', localField: '_id', foreignField: 'store', as: 'reviews' } },
+    //filter for only items that have 2 or more reviews
+  ]);
+};
+
 //create relationship with store and review
 //find reviews where the stores id is the same as the reviews store property
 storeSchema.virtual('reviews', {
