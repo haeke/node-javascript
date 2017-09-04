@@ -67,5 +67,7 @@ router.get('/map', storeController.mapPage);
 router.get('/api/search', catchErrors(storeController.searchStores));
 // route that returns the 10 nearest stores given a lat and lng
 router.get('/api/stores/near', catchErrors(storeController.mapStores));
+// route for individual hearted stores
+router.post('/api/stores/:id/heart', catchErrors(storeController.heartStore));
 
 module.exports = router;
