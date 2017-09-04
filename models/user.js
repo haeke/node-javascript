@@ -22,6 +22,10 @@ const userSchema = new Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  //relationship with multiple id's
+  hearts: [
+    { type: mongoose.Schema.ObjectId, ref: 'store' },
+  ]
 });
 
 //generated field for a users avatar
