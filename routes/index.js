@@ -63,7 +63,7 @@ router.post('/account/reset/:token',
 //map page route
 router.get('/map', storeController.mapPage);
 //get a users of hearted stores
-router.get('/hearts', catchErrors(storeController.getHearts));
+router.get('/hearts', authController.isLoggedIn, catchErrors(storeController.getHearts));
 
 // API endpoints
 router.get('/api/search', catchErrors(storeController.searchStores));
