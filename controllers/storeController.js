@@ -58,10 +58,32 @@ exports.createStore = async (req, res) => {
 
 // remember to add catchErrors when using async await in our route specific middleware
 exports.getStores = async (req, res) => {
+  const page = req.params.page || 1;
+  const limit = 4;
+  const skip = (page * limit) - limit;
+
   //query the database for list of all the stores stores
-  const stores = await Store.find(); //query for all the items in the store
-  //console.log(stores);
-  res.render('stores', { title: 'Stores', stores: stores });
+  //query for all the items in the store - return in descending order
+  const storesPromise = Store
+    .find()
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: 'desc' });
+  //get a count of all the stores in Store the database
+  const countPromise = Store.count();
+  //wait to get the stores and count
+  const [stores, count] = await Promise.all([storesPromise, countPromise]);
+
+  const pages = Math.ceil(count / limit);
+
+  //if a user requests a page that does not exist
+  if (!stores.length && skip) {
+    req.flash('info', `You asked for page ${page}. It does not exist.`);
+    res.redirect(`/stores/page/${pages}`);
+    return;
+  }
+
+  res.render('stores', { title: 'Stores', stores: stores, page: page, pages: pages, count: count });
 };
 
 const confirmOwner = (store, user) => {
