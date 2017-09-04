@@ -99,7 +99,7 @@ exports.updateStore = async (req, res) => {
 exports.getStoreBySlug = async (req, res, next) => {
   //if you need to check what data is available use req.json(req.params)
   //query for store information in the slug
-  const store = await Store.findOne({ slug: req.params.slug }).populate('author');
+  const store = await Store.findOne({ slug: req.params.slug }).populate('author reviews');
   if (!store) {
     return next();
   }
@@ -172,6 +172,7 @@ exports.heartStore = async (req, res) => {
 };
 
 exports.getHearts = async (req, res) => {
+  //get a list of stores
   const stores = await Store.find({
     _id: { $in: req.user.hearts },
   });

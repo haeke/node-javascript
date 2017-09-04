@@ -40,7 +40,10 @@ const storeSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'user',
     required: 'Supply an author',
-  },
+  }
+}, {
+    toJSON: { virtuals: true }, //add virtuals to the schema
+    toObject: { virtuals: true }, //add virtuals to the schema
 });
 
 //define the index for the name and description of stores
@@ -80,6 +83,14 @@ storeSchema.statics.getTagsList = function () {
     { $sort: { count: -1 } },
   ]);
 };
+
+//create relationship with store and review
+//find reviews where the stores id is the same as the reviews store property
+storeSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'store',
+});
 
 // reference for outside of this file
 module.exports = mongoose.model('Store', storeSchema);

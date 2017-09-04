@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Review = mongoose.model('Review');
 
-//when a user posts a review - save the authors id, get the ID of the URL
+//when a user posts a review - save the authors id, get the ID of the URL and the text of the review and add it to mongodb
 exports.addReview = async (req, res) => {
   //id from the current logged in user
   req.body.author = req.user._id;
